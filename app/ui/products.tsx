@@ -58,7 +58,7 @@ export default function Products() {
       {products.length > 0 && !loading && (
         <div
           id='products'
-          className='grid w-full grid-cols-[repeat(auto-fit,minmax(200px,1fr))] items-start justify-center gap-5 p-5'>
+          className='grid w-full grid-cols-[repeat(auto-fit,minmax(200px,1fr))] items-start justify-center gap-5'>
           {products.map(product => {
             const price =
               product.price - (product.price * product.discount) / 100 ||
