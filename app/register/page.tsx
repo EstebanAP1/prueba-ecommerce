@@ -32,7 +32,7 @@ export default function RegisterPage() {
   useEffect(() => {
     if (state.redirection) {
       toast.success(state.message)
-      push('/')
+      push('/login')
       return
     }
     if (state.message && !state.redirection) {

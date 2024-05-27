@@ -31,6 +31,7 @@ type State = {
 
 export async function register(prevState: State, formData: FormData) {
   try {
+    const { name, email, password } = Object.fromEntries(formData)
     const validation = registerSchema.safeParse(Object.fromEntries(formData))
     if (!validation.success)
       return {
@@ -46,7 +47,7 @@ export async function register(prevState: State, formData: FormData) {
     const apiUrl = process.env.API_URL
     const response = await fetch(`${apiUrl}/user/register`, {
       method: 'POST',
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify({ name, username: email, password }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -54,8 +55,17 @@ export async function register(prevState: State, formData: FormData) {
 
     if (!response.ok) throw new Error('Error registrando usuario')
 
+    const data = await response.json()
+
+    if (!data.success) {
+      return {
+        message: data.message,
+        redirection: false
+      }
+    }
+
     return {
-      message: '¡Registro exitoso! Por favor inicie sesión.',
+      message: data.message,
       redirection: true
     }
   } catch (error) {
