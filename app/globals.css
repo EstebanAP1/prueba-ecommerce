@@ -9,18 +9,5 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: transparent;
-}
-
-*::-webkit-scrollbar {
-  width: 6px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  border: transparent;
+  scrollbar-color: #000 #f1f2eb;
 }

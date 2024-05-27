@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
+import Link from 'next/link'
 import { authenticate } from '@/app/lib/actions'
 import { Input } from '@/app/ui/input'
 import { Button } from '@/app/ui/button'
@@ -12,7 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { toast } from 'sonner'
-import Link from 'next/link'
+import { FacebookIcon, GoogleIcon } from '@/app/ui/icons'
 
 export default function LoginPage() {
   const initialState = {
@@ -45,8 +46,11 @@ export default function LoginPage() {
       </header>
       <main className='flex w-full items-center'>
         <form
-          action={login}
-          className='flex w-full flex-col items-center gap-5'>
+          action={e => {
+            login(e)
+          }}
+          className='flex w-full flex-col items-center gap-6'>
+          <input type='hidden' id='type' name='type' defaultValue={'custom'} />
           <div className='relative flex w-full items-start'>
             <Input
               type='text'
@@ -112,7 +116,11 @@ export default function LoginPage() {
               )}
             </span>
           </div>
-          <LoginButton />
+          <div className='flex w-full flex-col gap-2'>
+            <LoginButton />
+            <GoogleLoginButton />
+            <FacebookLoginButton />
+          </div>
         </form>
       </main>
       <footer className='flex flex-col items-center justify-center'>
@@ -130,14 +138,62 @@ function LoginButton() {
   return (
     <Button
       type='submit'
-      className={`group flex w-full flex-row items-center justify-start gap-1 ${
+      onClick={() =>
+        document.getElementById('type')?.setAttribute('value', 'custom')
+      }
+      className={clsx(
+        'group flex w-full flex-row items-center justify-start gap-1 border border-primary-black',
         pending ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-      }`}
+      )}
       aria-disabled={pending}
       disabled={pending}>
       Iniciar sesión
       <div className='transition-all group-hover:flex-1 group-focus:flex-1'></div>
       <ArrowRightIcon className='text-secondary size-5' />
+    </Button>
+  )
+}
+
+function GoogleLoginButton() {
+  const { pending } = useFormStatus()
+  return (
+    <Button
+      type='button'
+      onClick={() => {
+        document.getElementById('type')?.setAttribute('value', 'google')
+        document.querySelector('form')?.requestSubmit()
+      }}
+      className={clsx(
+        'group flex w-full cursor-pointer flex-row items-center justify-center gap-1 border border-primary-black bg-primary-white',
+        pending ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+      )}
+      aria-disabled={pending}
+      disabled={pending}
+      aria-label='Log in with Google'>
+      Iniciar sesión con Google
+      <GoogleIcon className='size-6 transition group-hover:scale-110' />
+    </Button>
+  )
+}
+
+function FacebookLoginButton() {
+  const { pending } = useFormStatus()
+  return (
+    <Button
+      type='button'
+      onClick={() => {
+        document.getElementById('type')?.setAttribute('value', 'facebook')
+        document.querySelector('form')?.requestSubmit()
+      }}
+      className={clsx(
+        'group flex w-full cursor-pointer flex-row items-center justify-center gap-1 border border-primary-black bg-primary-white',
+        pending ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+      )}
+      aria-disabled={pending}
+      disabled={pending}
+      aria-label='Log in with Facebook'>
+      Iniciar sesión con Facebook
+      <FacebookIcon className='size-6 transition group-hover:scale-110' />
     </Button>
   )
 }

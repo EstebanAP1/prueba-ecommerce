@@ -3,6 +3,7 @@ import { Montserrat_Alternates } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
 import clsx from 'clsx'
+import dynamic from 'next/dynamic'
 
 const monserrat_a = Montserrat_Alternates({
   subsets: ['latin'],
@@ -13,6 +14,10 @@ export const metadata: Metadata = {
   title: 'Ecommerce App',
   description: 'Prubea técnina Junior Frontend Developer'
 }
+
+const StoreProvider = dynamic(() => import('@/app//StoreProvider'), {
+  ssr: false
+})
 
 export default async function RootLayout({
   children
@@ -26,8 +31,10 @@ export default async function RootLayout({
           'max-w-dvw flex min-h-dvh text-primary-black',
           monserrat_a.className
         )}>
-        {children}
-        <Toaster pauseWhenPageIsHidden richColors closeButton />
+        <StoreProvider>
+          {children}
+          <Toaster pauseWhenPageIsHidden richColors className='select-none' />
+        </StoreProvider>
       </body>
     </html>
   )

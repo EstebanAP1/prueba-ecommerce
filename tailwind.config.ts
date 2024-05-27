@@ -14,21 +14,21 @@ const config: Config = {
         'secondary-white': '#EFEFEF',
         'primary-black': '#131515',
         'secondary-black': '#8F918D',
-        'primary-interactive': '#e1ed3e'
+        'interactive': '#e1ed3e'
       },
       textColor: {
         'primary-white': '#F1F2EB',
         'secondary-white': '#EFEFEF',
         'primary-black': '#131515',
         'secondary-black': '#8F918D',
-        'primary-interactive': '#e1ed3e'
+        'interactive': '#e1ed3e'
       },
       borderColor: {
         'primary-white': '#F1F2EB',
         'secondary-white': '#EFEFEF',
         'primary-black': '#131515',
         'secondary-black': '#8F918D',
-        'primary-interactive': '#e1ed3e'
+        'interactive': '#e1ed3e'
       }
     }
   },

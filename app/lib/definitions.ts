@@ -5,5 +5,10 @@ export interface Product {
   image: string
   description: string
   discount: number
+  category: string
   stock: number
+}
+
+export interface Cart extends Product {
+  quantity: number
 }
