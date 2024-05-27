@@ -3,16 +3,20 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { toast } from 'sonner'
-import { useProducts } from '@/app/lib/features/hooks/useProducts'
+import { useProducts } from '@/app/lib/features/hooks/useEcommerce'
 import { Button } from '@/app/ui/button'
-import { addToCart } from '@/app/lib/actions'
 import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function AddToCartModal() {
   const router = useRouter()
-  const { modal, hideModal, incrementProduct, decrementProduct, hideModalRef } =
-    useProducts()
-  const [loading, setLoading] = useState(false)
+  const {
+    modal,
+    hideModal,
+    incrementProduct,
+    decrementProduct,
+    hideModalRef,
+    addToCart
+  } = useProducts()
 
   const { show, product } = modal
 
@@ -29,23 +33,6 @@ export default function AddToCartModal() {
     ) : (
       <p>${priceFormatted}</p>
     )
-
-  const handleSubmit = async () => {
-    setLoading(true)
-
-    const response = await addToCart(product)
-
-    if (!response.success) {
-      toast.error(response.message)
-      if (response.redirection) {
-        router.push('/login')
-      }
-    }
-
-    setLoading(false)
-    toast.success(response.message)
-    hideModal()
-  }
 
   useEffect(() => {
     const escapeHideModal = (e: KeyboardEvent) => {
@@ -119,19 +106,15 @@ export default function AddToCartModal() {
                 <PlusIcon className='size-6' />
               </button>
             </div>
-            <form action={handleSubmit}>
-              <Button
-                type='submit'
-                className='flex gap-2'
-                disabled={loading}
-                aria-label='Add item to cart'
-                aria-disabled={loading}>
-                <p>Agregar al carrito</p>
-                <span className='font-medium'>
-                  ${(price * product.quantity).toLocaleString('es-CO')}
-                </span>
-              </Button>
-            </form>
+            <Button
+              onClick={addToCart}
+              className='flex gap-2 border border-primary-black'
+              aria-label='Add item to cart'>
+              <p>Agregar al carrito</p>
+              <span className='font-medium'>
+                ${(price * product.quantity).toLocaleString('es-CO')}
+              </span>
+            </Button>
           </div>
         </main>
       </section>

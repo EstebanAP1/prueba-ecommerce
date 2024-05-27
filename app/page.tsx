@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { getProducts } from '@/app/lib/data'
 import Header from '@/app/ui/header'
 import clsx from 'clsx'
-import { useProducts } from '@/app/lib/features/hooks/useProducts'
+import { useProducts } from '@/app/lib/features/hooks/useEcommerce'
 import AddToCartModal from '@/app/ui/add-to-cart'
 import Cart from '@/app/ui/cart'
 

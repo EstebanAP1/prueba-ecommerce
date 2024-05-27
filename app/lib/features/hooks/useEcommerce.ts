@@ -1,24 +1,28 @@
 import { useAppDispatch, useAppSelector } from '@/app/lib/store'
 import {
+  addToCartAction,
   decrementProductAction,
+  decrementProductInCartAction,
   filterByCategoryAction,
   hideModalAction,
   incrementProductAction,
+  incrementProductInCartAction,
   initializeProductsAction,
+  removeProductFromCartAction,
   setLoadingAction,
   showModalAction,
   toggleCartAction
-} from '@/app/lib/features/productsSlice'
-import { Product } from '@/app/lib/definitions'
+} from '@/app/lib/features/ecommerceSlice'
+import { Cart, Product } from '@/app/lib/definitions'
 import { useRef } from 'react'
 
 export function useProducts() {
   const dispatch = useAppDispatch()
-  const products = useAppSelector(state => state.filteredProducts)
-  const loading = useAppSelector(state => state.loading)
-  const categories = useAppSelector(state => state.categories)
-  const modal = useAppSelector(state => state.modal)
-  const cart = useAppSelector(state => state.cart)
+  const products = useAppSelector(state => state.ecommerce.filteredProducts)
+  const loading = useAppSelector(state => state.ecommerce.loading)
+  const categories = useAppSelector(state => state.ecommerce.categories)
+  const modal = useAppSelector(state => state.ecommerce.modal)
+  const cart = useAppSelector(state => state.ecommerce.cart)
 
   const setLoading = (loading: boolean) => {
     dispatch(setLoadingAction(loading))
@@ -45,6 +49,17 @@ export function useProducts() {
 
   const closeCart = () => dispatch(toggleCartAction(false))
 
+  const addToCart = () => dispatch(addToCartAction())
+
+  const incrementProductInCart = (product_id: string) =>
+    dispatch(incrementProductInCartAction(product_id))
+
+  const decrementProductInCart = (product_id: string) =>
+    dispatch(decrementProductInCartAction(product_id))
+
+  const removeProductFromCart = (product_id: string) =>
+    dispatch(removeProductFromCartAction(product_id))
+
   return {
     products,
     loading,
@@ -60,6 +75,10 @@ export function useProducts() {
     hideModal,
     hideModalRef: hideModalRef.current,
     openCart,
-    closeCart
+    closeCart,
+    addToCart,
+    incrementProductInCart,
+    decrementProductInCart,
+    removeProductFromCart
   }
 }

@@ -5,7 +5,7 @@ import { Product } from '@/app/lib/definitions'
 export async function getProducts(): Promise<Product[]> {
   const products = await Promise.resolve([
     {
-      id: 1,
+      id: '1',
       name: 'Product 1',
       price: 10000,
       image: 'https://via.placeholder.com/150',
@@ -15,7 +15,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 10
     },
     {
-      id: 2,
+      id: '2',
       name: 'Product 2',
       price: 14900,
       image: 'https://via.placeholder.com/150',
@@ -25,7 +25,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 0
     },
     {
-      id: 3,
+      id: '3',
       name: 'Product 3',
       price: 25000,
       image: 'https://via.placeholder.com/150',
@@ -35,7 +35,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 30
     },
     {
-      id: 4,
+      id: '4',
       name: 'Product 4',
       price: 50000,
       image: 'https://via.placeholder.com/150',
@@ -45,7 +45,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 40
     },
     {
-      id: 5,
+      id: '5',
       name: 'Product 5',
       price: 12000,
       image: 'https://via.placeholder.com/150',
@@ -55,7 +55,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 50
     },
     {
-      id: 6,
+      id: '6',
       name: 'Product 6',
       price: 34000,
       image: 'https://via.placeholder.com/150',
@@ -65,7 +65,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 60
     },
     {
-      id: 7,
+      id: '7',
       name: 'Product 7',
       price: 35900,
       image: 'https://via.placeholder.com/150',
@@ -75,7 +75,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 70
     },
     {
-      id: 8,
+      id: '8',
       name: 'Product 8',
       price: 23900,
       image: 'https://via.placeholder.com/150',
@@ -85,7 +85,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 80
     },
     {
-      id: 9,
+      id: '9',
       name: 'Product 9',
       price: 21000,
       image: 'https://via.placeholder.com/150',
@@ -95,7 +95,7 @@ export async function getProducts(): Promise<Product[]> {
       stock: 90
     },
     {
-      id: 10,
+      id: '10',
       name: 'Product 10',
       price: 23000,
       image: 'https://via.placeholder.com/150',

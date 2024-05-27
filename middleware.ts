@@ -4,12 +4,6 @@ import type { NextRequest } from 'next/server'
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  if (!pathname.startsWith('/login') && !pathname.startsWith('/register')) {
-    const token = req.cookies.get('AuthToken')
-    if (!token) return NextResponse.redirect(new URL('/login', req.url))
-    return NextResponse.next()
-  }
-
   if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
     const token = req.cookies.get('AuthToken')
     if (token) return NextResponse.redirect(new URL('/', req.url))
@@ -18,5 +12,5 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/login', '/register']
+  matcher: ['/login', '/register']
 }

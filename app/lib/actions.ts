@@ -11,13 +11,21 @@ const loginSchema = z.object({
       required_error: 'Por favor ingrese un correo.',
       invalid_type_error: 'Por favor ingrese un correo válido.'
     })
-    .email({ message: 'Por favor ingrese un correo válido.' }),
+    .email({ message: 'Por favor ingrese un correo válido.' })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'El correo no puede contener caracteres especiales.'
+    ),
   password: z
     .string({
       required_error: 'Por favor ingrese una contraseña',
       invalid_type_error: 'Por favor ingrese una contraseña válida.'
     })
     .min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'La contraseña no puede contener caracteres especiales.'
+    )
 })
 
 type State = {
@@ -58,22 +66,35 @@ export async function authenticate(prevState: State, formData: FormData) {
 }
 
 const registerSchema = z.object({
-  name: z.string({
-    required_error: 'Por favor ingrese su nombre.',
-    invalid_type_error: 'Por favor ingrese un nombre válido.'
-  }),
+  name: z
+    .string({
+      required_error: 'Por favor ingrese su nombre.',
+      invalid_type_error: 'Por favor ingrese un nombre válido.'
+    })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'El nombre no puede contener caracteres especiales.'
+    ),
   email: z
     .string({
       required_error: 'Por favor ingrese un correo.',
       invalid_type_error: 'Por favor ingrese un correo válido.'
     })
-    .email({ message: 'Por favor ingrese un correo válido.' }),
+    .email({ message: 'Por favor ingrese un correo válido.' })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'El correo no puede contener caracteres especiales.'
+    ),
   password: z
     .string({
       required_error: 'Por favor ingrese una contraseña',
       invalid_type_error: 'Por favor ingrese una contraseña válida.'
     })
     .min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'La contraseña no puede contener caracteres especiales.'
+    )
 })
 
 export async function register(prevState: State, formData: FormData) {
@@ -119,52 +140,4 @@ export async function logout() {
     // })
   } catch (error) {}
   cookies().delete('AuthToken')
-  redirect('/login')
-}
-
-export async function addToCart(product: Product) {
-  try {
-    const token = cookies().get('AuthToken')?.value
-    // const response = await fetch(`${apiUrl}/cart/add`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application',
-    //     'Authorization': `Bearer ${token}`
-    //   },
-    //   body: JSON.stringify(product)
-    // })
-
-    return {
-      success: true,
-      message: 'Producto agregado al carrito.',
-      redirection: false
-    }
-  } catch (error) {
-    return {
-      success: false,
-      message: 'Lo siento, hemos tenido un error al agregar el producto.',
-      redirection: false
-    }
-  }
-}
-
-export async function removeFromCart(product: Product) {
-  try {
-    const token = cookies().get('AuthToken')?.value
-    // const response = await fetch(`${apiUrl}/cart/remove`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application',
-    //     'Authorization': `Bearer ${token}`
-    //   },
-    //   body: JSON.stringify(product)
-    // })
-
-    return { message: 'Producto eliminado del carrito.', redirection: false }
-  } catch (error) {
-    return {
-      message: 'Lo siento, hemos tenido un error al eliminar el producto.',
-      redirection: false
-    }
-  }
 }

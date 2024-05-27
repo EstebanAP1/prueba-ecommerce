@@ -1,27 +1,26 @@
 import { logout } from '@/app/lib/actions'
 import {
   ShoppingCartIcon,
-  ArrowLeftEndOnRectangleIcon
+  ArrowLeftEndOnRectangleIcon,
+  ArrowRightEndOnRectangleIcon
 } from '@heroicons/react/24/outline'
-import { useProducts } from '@/app/lib/features/hooks/useProducts'
+import { useProducts } from '@/app/lib/features/hooks/useEcommerce'
+import { getCookie } from 'cookies-next'
+import Link from 'next/link'
+import { toast } from 'sonner'
 
 export default function Header() {
   const { openCart } = useProducts()
+  const token = getCookie('AuthToken')
+
+  const handleLogout = async () => {
+    await logout()
+    toast.message('Has cerrado sesión correctamente.')
+  }
+
   return (
-    <header className='grid w-full grid-cols-3 items-center justify-center bg-primary-white px-10 py-1 shadow'>
+    <header className='grid w-full grid-cols-2 items-center justify-center bg-primary-white px-10 py-1 shadow'>
       <h2 className='text-xl font-semibold'>EcommerceApp</h2>
-      <nav className='flex w-full select-none items-center justify-center gap-2'>
-        <a
-          href='#home'
-          className='px-4 py-3 text-lg transition-all hover:scale-105 hover:bg-primary-white-hover'>
-          Inicio
-        </a>
-        <a
-          href='#products'
-          className='px-4 py-3 text-lg hover:scale-105 hover:bg-primary-white-hover'>
-          Productos
-        </a>
-      </nav>
       <div className='flex items-center justify-end gap-4'>
         <button
           className='p-2 hover:scale-105'
@@ -29,11 +28,17 @@ export default function Header() {
           aria-label='Open cart'>
           <ShoppingCartIcon className='size-6' />
         </button>
-        <form action={logout}>
-          <button className='p-2 hover:scale-105'>
-            <ArrowLeftEndOnRectangleIcon className='size-6' />
-          </button>
-        </form>
+        {token ? (
+          <form action={handleLogout}>
+            <button className='p-2 hover:scale-105' aria-label='Cerrar sesión'>
+              <ArrowLeftEndOnRectangleIcon className='size-6' />
+            </button>
+          </form>
+        ) : (
+          <Link href='/login' className='p-2 hover:scale-105'>
+            <ArrowRightEndOnRectangleIcon className='size-6' />
+          </Link>
+        )}
       </div>
     </header>
   )
