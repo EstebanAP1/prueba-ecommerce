@@ -1,3 +1,3 @@
-## Ecommerce App
+# Ecommerce App
 
-# Prueba Junior Soluciones Americana
+## Prueba Junior Soluciones Americana
