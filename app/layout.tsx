@@ -11,8 +11,11 @@ const monserrat_a = Montserrat_Alternates({
 })
 
 export const metadata: Metadata = {
-  title: 'Ecommerce App',
-  description: 'Prubea técnina Junior Frontend Developer'
+  title: {
+    default: 'Ecommerce App',
+    template: 'Ecommerce App | %s'
+  },
+  description: 'Prueba técnina Junior Frontend Developer'
 }
 
 const StoreProvider = dynamic(() => import('@/app//StoreProvider'), {
@@ -33,7 +36,12 @@ export default async function RootLayout({
         )}>
         <StoreProvider>
           {children}
-          <Toaster pauseWhenPageIsHidden richColors className='select-none' />
+          <Toaster
+            pauseWhenPageIsHidden
+            richColors
+            position='bottom-left'
+            className='select-none'
+          />
         </StoreProvider>
       </body>
     </html>

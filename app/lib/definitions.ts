@@ -1,14 +1,15 @@
 export interface Product {
-  id: string
+  id: number
   name: string
   price: number
   image: string
   description: string
   discount: number
-  category: string
+  categoryId: number
   stock: number
 }
 
 export interface Cart extends Product {
   quantity: number
+  available: boolean
 }

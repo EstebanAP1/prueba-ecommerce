@@ -9,18 +9,14 @@ import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function AddToCartModal() {
   const router = useRouter()
-  const {
-    modal,
-    hideModal,
-    incrementProduct,
-    decrementProduct,
-    hideModalRef,
-    addToCart
-  } = useProducts()
+  const { modal, hideModal, incrementProduct, decrementProduct, addToCart } =
+    useProducts()
 
   const { show, product } = modal
 
-  const price = product?.price - (product?.price * product?.discount) / 100
+  const price =
+    product?.price - (product?.price * product?.discount) / 100 ||
+    product?.price
   const priceFormatted = price.toLocaleString('es-CO')
   const showedPrice =
     product?.discount > 0 ? (
@@ -37,7 +33,7 @@ export default function AddToCartModal() {
   useEffect(() => {
     const escapeHideModal = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        hideModalRef()
+        hideModal()
       }
     }
     document.addEventListener('keydown', escapeHideModal)
@@ -45,7 +41,7 @@ export default function AddToCartModal() {
     return () => {
       document.removeEventListener('keydown', escapeHideModal)
     }
-  }, [hideModalRef])
+  }, [hideModal])
 
   return (
     <div
@@ -72,7 +68,7 @@ export default function AddToCartModal() {
         <main className='grid grow grid-cols-2 items-center gap-5 p-10'>
           <div className='flex items-center justify-center'>
             <img
-              src={product?.image}
+              src={'https://via.placeholder.com/150'}
               alt={product?.name}
               className='aspect-square w-full select-none rounded object-cover'
             />

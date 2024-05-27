@@ -35,7 +35,7 @@ export function getRecommendations() {
   return sortedProductIds
 }
 
-export function updateRecommendationsCookie(id: string) {
+export function updateRecommendationsCookie(id: number) {
   const cookie = getCookie('productRecommendations')
   if (!cookie) {
     setNewCookie(1, [id], 'productRecommendations')

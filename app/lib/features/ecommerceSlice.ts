@@ -8,29 +8,30 @@ import { toast } from 'sonner'
 
 const initialState = {
   products: [] as Product[],
-  filteredProducts: [] as Product[],
   categories: {
-    selected: 'all',
-    list: ['all', 'electronics', 'clothes', 'books']
+    selected: 0,
+    list: [] as Array<{ id: number; name: string }>
   },
   modal: {
     show: false,
     product: {
-      id: '',
+      id: 0,
       name: '',
       description: '',
       quantity: 0,
       price: 0,
       discount: 0,
       image: '',
-      stock: 0
+      stock: 0,
+      available: false,
+      categoryId: 0
     } as Cart
   },
   cart: {
     show: false,
     products: [] as Cart[]
   },
-  loading: true
+  loading: false
 }
 
 export const ecommerceSlice = createSlice({
@@ -44,59 +45,44 @@ export const ecommerceSlice = createSlice({
       state.products = action.payload
       const recommendations = getRecommendations()
       const recommended = state.products
-        .filter(product => recommendations.includes(product.id))
+        .filter(product => recommendations.includes(product.id.toString()))
         .sort(
           (a, b) =>
-            recommendations.indexOf(a.id) - recommendations.indexOf(b.id)
+            recommendations.indexOf(a.id.toString()) -
+            recommendations.indexOf(b.id.toString())
         )
 
       const nonRecommended = state.products.filter(
-        product => !recommendations.includes(product.id)
+        product => !recommendations.includes(product.id.toString())
       )
 
-      state.filteredProducts = [...recommended, ...nonRecommended]
+      state.cart.products = state.cart.products.map(product => {
+        const updatedProduct = state.products.some(p => p.id === product.id)
+        if (!updatedProduct) return { ...product, available: false }
+        return product
+      })
+      state.products = [...recommended, ...nonRecommended]
       state.loading = false
     },
-    filterByCategoryAction: (state, action: PayloadAction<string>) => {
-      const recommendations = getRecommendations()
-      const recommended = state.products.filter(product =>
-        recommendations.includes(product.id)
-      )
-      const nonRecommended = state.products.filter(
-        product => !recommendations.includes(product.id)
-      )
-
-      if (action.payload === 'all') {
-        state.filteredProducts = [...recommended, ...nonRecommended]
-        state.categories.selected = 'all'
-        return
-      }
+    initializeCategoriesAction: (
+      state,
+      action: PayloadAction<Array<{ id: number; name: string }>>
+    ) => {
+      state.categories.list = [{ id: 0, name: 'all' }, ...action.payload]
+    },
+    filterByCategoryAction: (state, action: PayloadAction<number>) => {
       state.categories.selected = action.payload
-      const products = [...recommended, ...nonRecommended]
-      state.filteredProducts = products.filter(
-        product => product.category === action.payload
-      )
     },
     showModalAction: (state, action: PayloadAction<Product>) => {
       state.modal.show = true
 
-      state.modal.product = { ...action.payload, quantity: 1 }
+      state.modal.product = { ...action.payload, quantity: 1, available: true }
 
       updateRecommendationsCookie(action.payload.id)
     },
     hideModalAction: state => {
       state.modal.show = false
-      state.modal.product = {
-        id: '',
-        name: '',
-        description: '',
-        quantity: 0,
-        price: 0,
-        discount: 0,
-        image: '',
-        category: '',
-        stock: 0
-      }
+      state.modal.product = initialState.modal.product
     },
     incrementProductAction: state => {
       const inCart = state.cart.products.find(
@@ -134,34 +120,14 @@ export const ecommerceSlice = createSlice({
 
       if (inCart) {
         inCart.quantity += state.modal.product.quantity
-        state.modal.product = {
-          id: '',
-          name: '',
-          description: '',
-          quantity: 0,
-          price: 0,
-          discount: 0,
-          image: '',
-          category: '',
-          stock: 0
-        }
+        state.modal.product = initialState.modal.product
         return
       }
 
       state.cart.products.push(state.modal.product)
-      state.modal.product = {
-        id: '',
-        name: '',
-        description: '',
-        quantity: 0,
-        price: 0,
-        discount: 0,
-        image: '',
-        category: '',
-        stock: 0
-      }
+      state.modal.product = initialState.modal.product
     },
-    incrementProductInCartAction: (state, action: PayloadAction<string>) => {
+    incrementProductInCartAction: (state, action: PayloadAction<number>) => {
       const inCart = state.cart.products.find(
         product => product.id === action.payload
       )
@@ -177,7 +143,7 @@ export const ecommerceSlice = createSlice({
       }
       toast.error('No se encontró el producto en el carrito.')
     },
-    decrementProductInCartAction: (state, action: PayloadAction<string>) => {
+    decrementProductInCartAction: (state, action: PayloadAction<number>) => {
       const inCart = state.cart.products.find(
         product => product.id === action.payload
       )
@@ -189,10 +155,14 @@ export const ecommerceSlice = createSlice({
       }
       toast.error('No se encontró el producto en el carrito.')
     },
-    removeProductFromCartAction: (state, action: PayloadAction<string>) => {
+    removeProductFromCartAction: (state, action: PayloadAction<number>) => {
       state.cart.products = state.cart.products.filter(
         product => product.id !== action.payload
       )
+    },
+    clearCartAction: state => {
+      state.cart.products = []
+      state.cart.show = false
     }
   }
 })
@@ -202,6 +172,7 @@ export default ecommerceSlice.reducer
 export const {
   setLoadingAction,
   initializeProductsAction,
+  initializeCategoriesAction,
   filterByCategoryAction,
   showModalAction,
   hideModalAction,
@@ -211,5 +182,6 @@ export const {
   addToCartAction,
   incrementProductInCartAction,
   decrementProductInCartAction,
-  removeProductFromCartAction
+  removeProductFromCartAction,
+  clearCartAction
 } = ecommerceSlice.actions
