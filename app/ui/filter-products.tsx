@@ -20,7 +20,8 @@ export default function FilterProducts() {
                 categories.selected === category.id
                   ? 'bg-interactive'
                   : 'hover:bg-primary-black/10'
-              )}>
+              )}
+              name='filter'>
               {category.name}
             </button>
           ))}

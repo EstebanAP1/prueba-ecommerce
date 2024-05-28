@@ -105,7 +105,8 @@ export default function AddToCartModal() {
             <Button
               onClick={addToCart}
               className='flex gap-2 border border-primary-black'
-              aria-label='Add item to cart'>
+              aria-label='Add item to cart'
+              id='add-to-cart'>
               <p>Agregar al carrito</p>
               <span className='font-medium'>
                 ${(price * product.quantity).toLocaleString('es-CO')}

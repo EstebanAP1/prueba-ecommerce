@@ -20,8 +20,6 @@ export default function middleware(req: NextRequest) {
           secure: process.env.NODE_ENV === 'production',
           maxAge: 60 * 60 * 24 * 7
         })
-        console.log(res.url)
-        console.log(res.cookies.get('AuthToken'))
         return res
       }
     }

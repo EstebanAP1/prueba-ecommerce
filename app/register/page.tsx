@@ -73,7 +73,7 @@ export default function RegisterPage() {
             />
             <label
               htmlFor='name'
-              className='absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
+              className='pointer-events-none absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
               Nombre
             </label>
           </div>
@@ -94,7 +94,7 @@ export default function RegisterPage() {
             />
             <label
               htmlFor='email'
-              className='absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
+              className='pointer-events-none absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
               Email
             </label>
           </div>
@@ -115,7 +115,7 @@ export default function RegisterPage() {
             />
             <label
               htmlFor='password'
-              className='absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
+              className='absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 pointer-events-none peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
               Ingresa tu contraseña
             </label>
             <span

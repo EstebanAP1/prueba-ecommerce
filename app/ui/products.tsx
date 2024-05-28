@@ -77,14 +77,20 @@ export default function Products() {
               )
 
             return (
-              <div
+              <button
                 key={product.id}
                 className={clsx(
                   'group flex h-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md p-2 transition-all hover:scale-110',
                   product.stock === 0 && 'pointer-events-none',
                   selected !== 0 && product.categoryId !== selected && 'hidden'
                 )}
-                onClick={() => showModal(product)}>
+                onClick={() => showModal(product)}
+                aria-label='Open add to cart'
+                name='product-card'
+                aria-disabled={
+                  selected !== 0 && product.categoryId !== selected
+                }
+                disabled={selected !== 0 && product.categoryId !== selected}>
                 <div className='relative'>
                   {product.discount > 0 && (
                     <span className='absolute right-1 top-1 z-10 flex size-14 select-none items-center justify-center text-nowrap rounded-full bg-primary-black text-[10px] text-primary-white transition-all group-hover:scale-110'>
@@ -116,7 +122,7 @@ export default function Products() {
                     {showedPrice}
                   </div>
                 </div>
-              </div>
+              </button>
             )
           })}
         </div>

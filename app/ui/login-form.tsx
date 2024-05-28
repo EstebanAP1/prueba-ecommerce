@@ -78,7 +78,7 @@ export default function LoginForm({ onSubmit }: { onSubmit?: () => void }) {
             />
             <label
               htmlFor='email'
-              className='absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
+              className='pointer-events-none absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
               Email
             </label>
           </div>
@@ -99,7 +99,7 @@ export default function LoginForm({ onSubmit }: { onSubmit?: () => void }) {
             />
             <label
               htmlFor='password'
-              className='absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
+              className='pointer-events-none absolute start-2.5 top-2 z-10 origin-[0] -translate-y-5 scale-75 transform cursor-text bg-secondary-white px-1 text-primary-black transition-all duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75'>
               Ingresa tu contraseña
             </label>
             <span
@@ -155,7 +155,8 @@ function LoginButton() {
         pending ? 'cursor-not-allowed' : 'cursor-pointer'
       )}
       aria-disabled={pending}
-      disabled={pending}>
+      disabled={pending}
+      id='custom-login'>
       Iniciar sesión
       <div className='transition-all group-hover:flex-1 group-focus:flex-1'></div>
       <ArrowRightIcon className='text-secondary size-5' />

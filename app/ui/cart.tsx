@@ -192,7 +192,9 @@ export default function Cart() {
             <Button
               type='submit'
               className='border border-primary-black'
-              aria-label='Place order'>
+              aria-label='Place order'
+              id='place-order'
+              name='place-order'>
               Realizar pedido
             </Button>
           </form>

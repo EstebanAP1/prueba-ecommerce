@@ -33,12 +33,13 @@ export default function Header() {
 
   return (
     <header className='grid w-full grid-cols-2 items-center justify-center bg-primary-white px-10 py-1 shadow'>
-      <h2 className='text-xl font-semibold'>EcommerceApp</h2>
+      <h1 className='text-xl font-semibold'>EcommerceApp</h1>
       <div className='flex items-center justify-end gap-4'>
         <button
           className='relative p-2 hover:scale-105'
           onClick={handleOpenCart}
-          aria-label='Open cart'>
+          aria-label='Open cart'
+          id='open-cart'>
           <ShoppingCartIcon className='size-6' />
           {itemsInCart !== 0 && (
             <span className='absolute -right-1 top-0 flex size-5 items-center justify-center rounded-full bg-primary-black p-1 text-xs text-primary-white'>
@@ -48,12 +49,15 @@ export default function Header() {
         </button>
         {token ? (
           <form action={handleLogout}>
-            <button className='p-2 hover:scale-105' aria-label='Cerrar sesión'>
+            <button
+              className='p-2 hover:scale-105'
+              aria-label='Cerrar sesión'
+              id='logout'>
               <ArrowLeftEndOnRectangleIcon className='size-6' />
             </button>
           </form>
         ) : (
-          <Link href='/login' className='p-2 hover:scale-105'>
+          <Link href='/login' className='p-2 hover:scale-105' id='login'>
             <ArrowRightEndOnRectangleIcon className='size-6' />
           </Link>
         )}
