@@ -27,23 +27,8 @@ type State = {
 }
 
 export async function authenticate(prevState: State, formData: FormData) {
-  const type = formData.get('type') as string
-
-  if (type === 'custom') {
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    return customLogin(email, password)
-  }
-  if (type === 'google') {
-    return { message: 'No se ha podido iniciar sesión.', success: false }
-  }
-  if (type === 'facebook') {
-    return { message: 'No se ha podido iniciar sesión.', success: false }
-  }
-  return { message: 'No se ha podido iniciar sesión.', success: false }
-}
-
-async function customLogin(email: string, password: string) {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
   try {
     const validation = loginSchema.safeParse({ email, password })
     if (!validation.success)
@@ -81,7 +66,10 @@ async function customLogin(email: string, password: string) {
         success: false
       }
 
-    cookies().set('AuthToken', token)
+    cookies().set('AuthToken', token, {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24 * 7
+    })
     return { message: 'Sesión iniciada correctamente.', success: true }
   } catch (error) {
     return {
@@ -89,4 +77,14 @@ async function customLogin(email: string, password: string) {
       success: false
     }
   }
+}
+
+export async function googleLogin() {
+  const apiUrl = process.env.API_URL
+  return `${apiUrl}/auth/google/login`
+}
+
+export async function facebookLogin() {
+  const apiUrl = process.env.API_URL
+  return `${apiUrl}/auth/facebook/login`
 }
