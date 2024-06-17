@@ -9,7 +9,7 @@
 Instala las dependencias necesarias usando npm:
 
 ```sh
-npm install
+pnpm install
 ```
 
 #### 2. Iniciar el Proyecto
@@ -17,7 +17,7 @@ npm install
 Inicia el servidor en modo desarrollo:
 
 ```sh
-npm dev
+pnpm dev
 ```
 
 #### 3. Testing
@@ -25,7 +25,7 @@ npm dev
 Ejecuta las pruebas:
 
 ```sh
-npm test
+pnpm test
 ```
 
 ---
